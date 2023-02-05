@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Edit user's details</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center">Edit user's details</h2>
+    <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.id})}" th:object="${user}">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   th:field="*{name}" placeholder="Enter name">
+            <form th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red">Name Error</form>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName"
+                   th:field="*{lastName}" placeholder="Enter last name">
+            <form th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" style="color: red">Last Name Error</form>
+        </div>
+        <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age"
+                   th:field="*{age}" placeholder="Enter age">
+            <form th:if="${#fields.hasErrors('age')}" th:errors="*{age}" style="color: red">Age Error</form>
+        </div>
+        <div class="form-group">
+            <label for="username">E-mail</label>
+            <input type="text" class="form-control" id="username"
+                   th:field="*{username}" placeholder="Enter e-mail">
+            <form th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red">Email Error</form>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password"
+                   th:field="*{password}" placeholder="Enter password">
+            <form th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red">Password Error</form>
+        </div>
+        <th:block th:each="role : ${roles}">
+            <input type="checkbox"
+                   name="roles"
+                   th:value="${role.id}"/>
+            <label th:text="${role.authority}"></label>
+        </th:block>
+        <button type="submit" value="Save Changes" class="btn btn-primary">Save Changes</button>
+        <a class="btn btn-secondary" th:href="@{/admin}" role="button">Return to all users</a>
+        <a class="btn btn-secondary" th:href="@{/admin/{id}(id=${user.id})}" role="button">Return to user details</a>
+        <form action="#" th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+    </form>
+</div>
+</body>
+</html>
